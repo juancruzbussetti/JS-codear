@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lista de compras</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <h1>Lista de compras</h1>
+
+    <!-- BLOQUE 1: formulario -->
+    <form id="formulario" class="formulario">
+      <label for="input-nombre">Producto</label>
+      <input type="text" id="input-nombre" placeholder="Ej: Leche" autocomplete="off">
+
+      <label for="input-precio">Precio</label>
+      <input type="number" id="input-precio" placeholder="Ej: 2500" min="0" step="any">
+
+      <button type="submit">Agregar producto</button>
+    </form>
+
+    <p id="mensaje-error" class="mensaje-error" role="alert"></p>
+
+    <!-- BLOQUE 3: total -->
+    <p class="total">Total: <span id="total">$0</span></p>
+
+    <!-- BLOQUE 3 y 4: contenedor de tarjetas -->
+    <section id="contenedor" class="contenedor"></section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
