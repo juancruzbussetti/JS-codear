@@ -1,6 +1,4 @@
-
 let productos = [];
-
 
 const formulario = document.getElementById("formulario");
 const inputNombre = document.getElementById("input-nombre");
@@ -40,7 +38,7 @@ formulario.addEventListener("submit", (evento) => {
 function actualizarTotal() {
   sumatoria = productos.reduce(
     (acumulado, producto) => acumulado + producto.precio,
-    0
+    0,
   );
 
   totalElemento.textContent = "$ " + sumatoria;
@@ -53,25 +51,42 @@ function renderizar() {
     const tarjeta = document.createElement("div");
     tarjeta.className = "tarjeta";
 
-    const nombre = document.createElement("span");
-    nombre.className = "tarjeta-nombre";
-    nombre.textContent = producto.nombre;
+    // const nombre = document.createElement("span");
+    // nombre.className = "tarjeta-nombre";
+    // nombre.textContent = producto.nombre;
 
-    const precio = document.createElement("span");
-    precio.className = "tarjeta-precio";
-    precio.textContent ="$ "+ producto.precio;
+    // const precio = document.createElement("span");
+    // precio.className = "tarjeta-precio";
+    // precio.textContent ="$ "+ producto.precio;
 
-    tarjeta.appendChild(nombre);
-    tarjeta.appendChild(precio);
+    const contenido = /*HTML */ `<span class="tarjeta-nombre">${producto.nombre}</span class="tarjeta-precio">
+    <div>
+    <span class="me-2">$${producto.precio}</span>
+    <button onclick="eliminarTarjeta(${index})">x</button>
+    </div>`;
 
-    tarjeta.addEventListener("click", () => {
-      productos.splice(index, 1);
+    // tarjeta.appendChild(nombre);
+    // tarjeta.appendChild(precio);
+    tarjeta.innerHTML = contenido;
 
-      actualizarTotal();
-      renderizar();
-    });
+    // tarjeta.addEventListener("click", () => {
+    //   productos.splice(index, 1);
+
+    //   actualizarTotal();
+    //   renderizar();
+    // });
 
     contenedor.appendChild(tarjeta);
   });
 }
 
+const eliminarTarjeta = (index) => {
+  const validar = confirm("Estás segurisimo que querés borrar el producto?");
+
+  if (validar) {
+    productos.splice(index, 1);
+
+    actualizarTotal();
+    renderizar();
+  }
+};
