@@ -1,47 +1,54 @@
+
 let productos = [];
 
-// ---------- REFERENCIAS AL DOM ----------
+
 const formulario = document.getElementById("formulario");
 const inputNombre = document.getElementById("input-nombre");
 const inputPrecio = document.getElementById("input-precio");
 const mensajeError = document.getElementById("mensaje-error");
 const contenedor = document.getElementById("contenedor");
 const totalElemento = document.getElementById("total");
+
 let sumatoria = 0;
 
 formulario.addEventListener("submit", (evento) => {
   evento.preventDefault();
-  inputNombre.value.trim();
 
+  const nombreProducto = inputNombre.value.trim();
   const precioNumero = Number(inputPrecio.value);
-if (!inputNombre.value || isNaN(precioNumero) || precioNumero <= 0) {
-  alert("Ingresa un nombre válido y un precio mayor a 0");
-  return;
-}
-const producto = {
-  nombre: inputNombre.value,
-  precio: Number(inputPrecio.value),
-};
-productos.push(producto);
 
-sumatoria = productos.reduce((acumulado, producto) => acumulado + producto.precio, 0);
-console.log(sumatoria);
-totalElemento.textContent = "$ " + sumatoria;
+  if (!nombreProducto || isNaN(precioNumero) || precioNumero <= 0) {
+    alert("Ingresa un nombre válido y un precio mayor a 0");
+    return;
+  }
 
-formulario.reset();
+  const producto = {
+    nombre: nombreProducto,
+    precio: precioNumero,
+  };
 
-inputNombre.focus();
+  productos.push(producto);
 
-renderizar();
+  actualizarTotal();
 
+  formulario.reset();
+  inputNombre.focus();
+
+  renderizar();
 });
 
+function actualizarTotal() {
+  sumatoria = productos.reduce(
+    (acumulado, producto) => acumulado + producto.precio,
+    0
+  );
+
+  totalElemento.textContent = "$ " + sumatoria;
+}
 
 function renderizar() {
-  // 1. Limpiar el contenedor para no duplicar tarjetas
   contenedor.textContent = "";
 
-  // 2. Recorrer el array y crear una tarjeta por producto
   productos.forEach((producto, index) => {
     const tarjeta = document.createElement("div");
     tarjeta.className = "tarjeta";
@@ -57,11 +64,14 @@ function renderizar() {
     tarjeta.appendChild(nombre);
     tarjeta.appendChild(precio);
 
+    tarjeta.addEventListener("click", () => {
+      productos.splice(index, 1);
+
+      actualizarTotal();
+      renderizar();
+    });
+
     contenedor.appendChild(tarjeta);
-
-    tarjeta.addEventListener("click", () => eliminarProducto(producto.id));
-
   });
-
 }
 
