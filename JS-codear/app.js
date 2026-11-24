@@ -59,7 +59,7 @@ function renderizar() {
 
     const precio = document.createElement("span");
     precio.className = "tarjeta-precio";
-    precio.textContent = producto.precio;
+    precio.textContent ="$ "+ producto.precio;
 
     tarjeta.appendChild(nombre);
     tarjeta.appendChild(precio);
